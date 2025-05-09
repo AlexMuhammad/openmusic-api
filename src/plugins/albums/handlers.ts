@@ -8,7 +8,7 @@ import AlbumValidator from "../../validator/albums/index";
 class AlbumHandler {
   public _service: AlbumService;
   public _validator: typeof AlbumValidator;
-  constructor(service: any, validator: any) {
+  constructor(service: AlbumService, validator: typeof AlbumValidator) {
     this._service = service;
     this._validator = validator;
 
