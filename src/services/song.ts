@@ -32,12 +32,34 @@ class SongService {
     return result.rows[0].id;
   }
 
-  async getAllSongs() {
-    const query = {
+  async getAllSongs(params?: { title?: string; performer?: string }) {
+    let query = {
       text: "SELECT id, title, performer FROM songs",
+      values: [] as any[],
     };
-    const result = await this._pool.query(query);
 
+    if (params && (params.title || params.performer)) {
+      let conditions = [];
+      let valueIndex = 1;
+
+      if (params.title) {
+        conditions.push(`title ILIKE $${valueIndex}`);
+        query.values.push(`%${params.title}%`);
+        valueIndex++;
+      }
+
+      if (params.performer) {
+        conditions.push(`performer ILIKE $${valueIndex}`);
+        query.values.push(`%${params.performer}%`);
+        valueIndex++;
+      }
+
+      if (conditions.length > 0) {
+        query.text += " WHERE " + conditions.join(" AND ");
+      }
+    }
+
+    const result = await this._pool.query(query);
     return result.rows;
   }
 

@@ -58,9 +58,13 @@ class SongHandler {
     }
   }
 
-  async getAllSongsHandler(_: Request, h: ResponseToolkit) {
+  async getAllSongsHandler(request: Request, h: ResponseToolkit) {
     try {
-      const songs = await this._service.getAllSongs();
+      const { title, performer } = request.query as {
+        title?: string;
+        performer?: string;
+      };
+      const songs = await this._service.getAllSongs({ title, performer });
 
       const res = h.response({
         status: "success",
