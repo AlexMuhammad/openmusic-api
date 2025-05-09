@@ -1,18 +1,5 @@
-import { Request, ResponseToolkit } from "hapi";
 import { ServerRoute } from "@hapi/hapi";
-
-interface AlbumHandler {
-  postAlbumHandler: (request: Request, h: ResponseToolkit) => Promise<any>;
-  getAlbumDetailHandler: (request: Request, h: ResponseToolkit) => Promise<any>;
-  updateAlbumByIdHandler: (
-    request: Request,
-    h: ResponseToolkit
-  ) => Promise<any>;
-  deleteAlbumByIdHandler: (
-    request: Request,
-    h: ResponseToolkit
-  ) => Promise<any>;
-}
+import AlbumHandler from "./handlers";
 
 const routes = (handler: AlbumHandler): ServerRoute[] => [
   {
