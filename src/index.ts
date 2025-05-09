@@ -2,6 +2,8 @@ import Hapi from "@hapi/hapi";
 import dotenv from "dotenv";
 import AlbumService from "./services/album";
 import AlbumValidator from "./validator/albums";
+import SongService from "./services/song";
+import SongValidator from "./validator/songs";
 
 dotenv.config();
 
@@ -26,9 +28,11 @@ const init = async () => {
 async function registerPlugins(server: Hapi.Server) {
   //services
   const albumService = new AlbumService();
+  const songService = new SongService();
 
   //plugins
   const albumPlugin = await import("./plugins/albums");
+  const songPlugin = await import("./plugins/songs");
 
   await server.register([
     {
@@ -36,6 +40,13 @@ async function registerPlugins(server: Hapi.Server) {
       options: {
         service: albumService,
         validator: AlbumValidator,
+      },
+    },
+    {
+      plugin: songPlugin.default,
+      options: {
+        service: songService,
+        validator: SongValidator,
       },
     },
   ]);
