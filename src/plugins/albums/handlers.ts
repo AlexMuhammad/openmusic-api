@@ -1,7 +1,7 @@
 import { Request, ResponseToolkit } from "hapi";
 
 import AlbumService from "../../services/album";
-import { CreateAlbumRequest } from "./types";
+import { AlbumRequest } from "./types";
 import ClientError from "../../exceptions/client-error";
 import AlbumValidator from "../../validator/albums/index";
 
@@ -20,10 +20,8 @@ class AlbumHandler {
 
   async postAlbumHandler(request: Request, h: ResponseToolkit) {
     try {
-      this._validator.validateAlbumPayload(
-        request.payload as CreateAlbumRequest
-      );
-      const { name, year } = request.payload as CreateAlbumRequest;
+      this._validator.validateAlbumPayload(request.payload as AlbumRequest);
+      const { name, year } = request.payload as AlbumRequest;
       const albumId = await this._service.addAlbum({ name, year });
 
       const res = h.response({
@@ -84,13 +82,11 @@ class AlbumHandler {
   }
   async updateAlbumByIdHandler(request: Request, h: ResponseToolkit) {
     try {
-      this._validator.validateAlbumPayload(
-        request.payload as CreateAlbumRequest
-      );
+      this._validator.validateAlbumPayload(request.payload as AlbumRequest);
 
       const { id } = request.params;
-      const { name, year } = request.payload as CreateAlbumRequest;
-      await this._service.updateAlbumById({ id, name, year });
+      const { name, year } = request.payload as AlbumRequest;
+      await this._service.updateAlbumById(id, { name, year });
 
       const res = h.response({
         status: "success",

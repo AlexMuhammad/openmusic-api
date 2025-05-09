@@ -1,4 +1,4 @@
-export interface CreateAlbumRequest {
+export interface AlbumRequest {
   name: string;
   year: number;
 }

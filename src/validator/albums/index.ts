@@ -1,9 +1,9 @@
 import InvariantError from "../../exceptions/invariant-error";
-import { CreateAlbumRequest } from "../../plugins/albums/types";
+import { AlbumRequest } from "../../plugins/albums/types";
 import { AlbumPayloadScheme } from "./schema";
 
 const AlbumValidator = {
-  validateAlbumPayload: (payload: CreateAlbumRequest) => {
+  validateAlbumPayload: (payload: AlbumRequest) => {
     const validationResult = AlbumPayloadScheme.validate(payload);
     if (validationResult.error) {
       throw new InvariantError(validationResult.error.message);
