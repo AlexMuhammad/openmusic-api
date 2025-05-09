@@ -67,7 +67,6 @@ class SongService {
     if (!result.rowCount) {
       throw new NotFoundError("Song not found");
     }
-    return result.rows[0].id;
   }
 
   async deleteSongById({ id }: { id: string }) {
@@ -80,7 +79,6 @@ class SongService {
     if (!result.rowCount) {
       throw new NotFoundError("Song not found");
     }
-    return result.rowCount;
   }
 }
 

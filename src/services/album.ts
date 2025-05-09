@@ -40,15 +40,16 @@ class AlbumService {
     return result.rows[0];
   }
 
-  async updateAlbumById({
-    id,
-    name,
-    year,
-  }: {
-    id: string;
-    name: string;
-    year: number;
-  }) {
+  async updateAlbumById(
+    id: string,
+    {
+      name,
+      year,
+    }: {
+      name: string;
+      year: number;
+    }
+  ) {
     const query = {
       text: "UPDATE albums SET name = $1, year = $2 WHERE id = $3",
       values: [name, year, id],
@@ -58,7 +59,6 @@ class AlbumService {
     if (!result.rowCount) {
       throw new NotFoundError("Album not found");
     }
-    return result.rowCount;
   }
 
   async deleteAlbumById({ id }: { id: string }) {
@@ -71,7 +71,6 @@ class AlbumService {
     if (!result.rowCount) {
       throw new NotFoundError("Album not found");
     }
-    return result.rowCount;
   }
 }
 
